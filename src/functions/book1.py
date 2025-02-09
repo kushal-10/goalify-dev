@@ -2,6 +2,7 @@ import weaviate
 import weaviate.classes.query as wq
 import os
 from weaviate.classes.init import Auth
+from restack_ai.function import function
 from pydantic import BaseModel
 import logging
 import asyncio
@@ -24,6 +25,7 @@ class Book1(BaseModel):
     content: str
 
 # Function to look up books
+@function.defn
 async def lookup_book(query: str) -> list[Book1]:
     try:
         log.info("lookup_book function started")
