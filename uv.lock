@@ -12,8 +12,7 @@ dependencies = [
     { name = "python-dotenv" },
     { name = "requests" },
     { name = "restack-ai" },
-    { name = "watchfiles" },
-    { name = "weaviate-client" },
+    { name = "watchfiles" }
 ]
 
 [package.metadata]
@@ -24,8 +23,7 @@ requires-dist = [
     { name = "python-dotenv", specifier = "==1.0.1" },
     { name = "requests", specifier = "==2.32.3" },
     { name = "restack-ai", specifier = "==0.0.62" },
-    { name = "watchfiles", specifier = ">=1.0.4" },
-    { name = "weaviate-client", specifier = "==4.10.4" },
+    { name = "watchfiles", specifier = ">=1.0.4" }
 ]
 
 [[package]]
