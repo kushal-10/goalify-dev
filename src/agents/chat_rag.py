@@ -2,12 +2,20 @@ from datetime import timedelta
 from typing import List
 from pydantic import BaseModel
 from restack_ai.agent import agent, import_functions, log
-
+from src.books.atomic_habits import atomic_habits
+from src.books.deep_work import deep_work
+from src.books.think_and_grow_rich import think_and_grow_rich
 
 with import_functions():
     from src.functions.llm_chat import llm_chat, LlmChatInput, Message
     from src.functions.lookup_sales import lookupSales
     from src.functions.book1 import lookup_book
+
+BOOKS = {
+    "think-and-grow-rich": think_and_grow_rich,
+    "atomic-habits": atomic_habits, 
+    "deep-work": deep_work
+}
 
 
 class MessageEvent(BaseModel):

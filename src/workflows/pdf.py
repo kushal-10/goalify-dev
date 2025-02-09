@@ -3,6 +3,7 @@ from typing import List
 from restack_ai.workflow import workflow 
 import pymupdf
 import requests
+import os
 
 class PdfWorkflowInput(BaseModel):
     file_upload: List[dict] = Field(files=True) 
@@ -12,9 +13,9 @@ class PdfWorkflow:
     @workflow.run
     async def run(self, input: PdfWorkflowInput):
         file = input.file_upload[0]
-        print(file['name'])
+        filename = str(file['name'])
 
-        response = requests.get(f"{'http://localhost:6233'}/api/download/{file['name']}")
+        response = requests.get(f"{'http://localhost:6233'}/api/download/{filename}")
         response.raise_for_status()  # Raise an error for bad responses
         content = response.content
         
@@ -24,8 +25,7 @@ class PdfWorkflow:
         for page in doc:
             text = page.get_text()
             pdfContent += text
-        
-         
+
         return { "content": pdfContent } 
 
 
