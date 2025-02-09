@@ -3,7 +3,11 @@ from typing import List
 from restack_ai.workflow import workflow 
 import pymupdf
 import requests
-import os
+from src.utils.split import split_text_into_chunks
+from src.functions.weaviate_client import get_weaviate_client
+import weaviate.classes as wvc
+from weaviate.util import generate_uuid5
+
 
 class PdfWorkflowInput(BaseModel):
     file_upload: List[dict] = Field(files=True) 
@@ -26,7 +30,28 @@ class PdfWorkflow:
             text = page.get_text()
             pdfContent += text
 
-        return { "content": pdfContent } 
+        chunks = split_text_into_chunks(text=pdfContent)
+
+        client = get_weaviate_client()
+        books_collection = client.collections.get("Book")
+        
+        try:
+            with books_collection.batch.dynamic() as batch:
+                for index, chunk in enumerate(chunks):
+                    book_obj = {
+                        "text": chunk,
+                        "chunk_id": index
+                    }
+                    
+                    batch.add_object(properties=book_obj, uuid=generate_uuid5(index))
+
+                    print("Batch seeded successfully.")
+                    
+        finally:
+            client.close()
+        
+
+        return { "message": "Pdf content inserted to weaviate successfully.", } 
 
 
         

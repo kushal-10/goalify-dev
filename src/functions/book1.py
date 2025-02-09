@@ -5,6 +5,7 @@ from weaviate.classes.init import Auth
 from pydantic import BaseModel
 import logging
 import asyncio
+from restack_ai.function import function
 
 log = logging.getLogger(__name__)
 
@@ -24,6 +25,7 @@ class Book1(BaseModel):
     content: str
 
 # Function to look up books
+@function.defn()
 async def lookup_book(query: str) -> list[Book1]:
     try:
         log.info("lookup_book function started")
