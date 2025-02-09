@@ -6,6 +6,12 @@ from src.books.atomic_habits import atomic_habits
 from src.books.deep_work import deep_work
 from src.books.think_and_grow_rich import think_and_grow_rich
 
+def create_query(message):
+    if not message.chapters:
+        return f"This is my goal - {message.goal}, this this the expected timeline - {message.timeline}. Based on this information, find the relevant chapters from the book."
+    else:
+        return f"This is my goal - {message.goal}, this this the expected timeline - {message.timeline}. Based on this information, find the relevant passages from the book. Here are the chapters: {message.chapters}"
+
 with import_functions():
     from src.functions.llm_chat import llm_chat, LlmChatInput, Message
     from src.functions.lookup_sales import lookupSales
@@ -37,10 +43,10 @@ class AgentRag:
         log.info(f"Received message: {message.content}")
 
         book_info = await agent.step(
-            lookup_book, start_to_close_timeout=timedelta(seconds=120)
+            lookup_book(create_query(message)), start_to_close_timeout=timedelta(seconds=120)
         )
 
-        system_content = f"You are a helpful assistant that can summaraize a given book divided into chapters and sections and can recommend actionable goals based on the book contents on chapter by chapter basis. Here is the book information: {book_info}"
+        system_content = f"You are a helpful assistant given a goal {message.goal}, a timeline {message.timeline} and relevant chapters from a book {book_info}, Given these three things, generate a JSON file with an action plan."
 
         self.messages.append(Message(role="user", content=message.content or ""))
 
