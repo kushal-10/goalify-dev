@@ -32,7 +32,7 @@ class AgentRag:
             lookup_book, start_to_close_timeout=timedelta(seconds=120)
         )
 
-        system_content = f"You are a helpful assistant that can summaraize a given book divided into chapters and sections and can recommend actionable goals based on the book contents on chapter by chapter basis. Here is the book information: {book_info}"
+        system_content = f"You are a helpful assistant given a goal, a timeline and relevant chapters from a book, Given these three things, generate a JSON file with an action plan. Here is the book information: {book_info}"
 
         self.messages.append(Message(role="user", content=message.content or ""))
 
