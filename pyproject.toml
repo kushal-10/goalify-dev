@@ -12,7 +12,8 @@ dependencies = [
     "watchfiles>=1.0.4",
     "requests==2.32.3",
     "python-dotenv==1.0.1",
-    "pymupdf>=1.25.3"
+    "pymupdf>=1.25.3",
+    "weaviate-client==4.10.4"
 ]
 
 [project.scripts]
