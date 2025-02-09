@@ -30,7 +30,7 @@ requires-dist = [
     { name = "requests", specifier = "==2.32.3" },
     { name = "restack-ai", specifier = "==0.0.62" },
     { name = "watchfiles", specifier = ">=1.0.4" },
-    { name = "weaviate-client", specifier = ">=4.10.4" },
+    { name = "weaviate-client", specifier = "==4.10.4" },
 ]
 
 [[package]]
